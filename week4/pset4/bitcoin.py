@@ -9,8 +9,10 @@ except ValueError:
     sys.exit("Command-line argument is not a number")
 
 try:
-    r = requests.get("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd")
-    price = r.json()["bitcoin"]["usd"]
+    r = requests.get("https://rest.coincap.io/v3/assets/bitcoin?apiKey=ReplaceWithYourCoinCapAPIKey")
+    r.raise_for_status()
+    data = r.json()
+    price = float(data["data"]["priceUsd"])
 except requests.RequestException:
     sys.exit("Could not fetch Bitcoin price")
 
